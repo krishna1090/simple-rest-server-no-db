@@ -33,7 +33,7 @@ $(document).ready(function(){
 					   {
 						  for(var i=0;i<mydata.length;i++)
 						  {
-							 $(".page").append('<div class="well col-md-8 pull-left"><h4>'+mydata[i].itname+'</h4><span id="'+mydata[i].id+'" class="glyphicon glyphicon-remove-sign pull-right"></span><button class="btnprice btn btn-primary" class="col-md-5">'+mydata[i].itprice+'</button><h6>'+mydata[i].itdesc+'</h6></div>');
+							 $(".page").append('<div class="well col-md-8 pull-left"><h4>'+mydata[i].itname+'</h4><span id="'+mydata[i].id+'" class="glyphicon glyphicon-remove-sign pull-right"></span><button class="btnprice btn btn-primary" class="col-md-5">$'+mydata[i].itprice+'</button><h6>'+mydata[i].itdesc+'</h6></div>');
 						  }
 				       }
 			   });
@@ -46,7 +46,10 @@ $(document).ready(function(){
 					  var itname=$('input:text[id="inputitemname"]').val();
 					  var itdesc=$('input:text[id="inputdescription"]').val();
 					  var itprice=$('input:text[id="inputprice"]').val();
-					 
+					  if (itname == "" || itdesc == "" || itprice == "") 
+					  {
+						  $('.error').fadeOut(200).show();
+                      } else {
 					  console.log(itprice);
 			$.ajax({
 			        url:"/products",
@@ -58,12 +61,19 @@ $(document).ready(function(){
 						},
 					
 				    success:function(data){
-					  $(".page").append('<div class="well col-md-8 pull-left"><h4>'+data.itname+'</h4><span id='+data.id+' class="glyphicon glyphicon-remove-sign pull-right"></span><button class="btnprice btn btn-primary" class="col-md-5">'+data.itprice+'</button><h6>'+data.itdesc+'</h6></div>');
+					  $(".page").append('<div class="well col-md-8 pull-left"><h4>'+data.itname+'</h4><span id='+data.id+' class="glyphicon glyphicon-remove-sign pull-right"></span><button class="btnprice btn btn-primary" class="col-md-5">$'+data.itprice+'</button><h6>'+data.itdesc+'</h6></div>');
 
 						$("#secondmain").trigger( 'click' );
 					}					
 		    });
+		  }
 	});	
+	
+	 $("#btnadd").click(function() {
+        $('input[type=text]').trigger('focusout').val("");
+     });
+	
+	
 });		
 			
 			
